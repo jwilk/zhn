@@ -1,0 +1,9 @@
+.. code:: console
+
+   $ zhn cowsay
+   2019-08-16T03:51:56 https://news.ycombinator.com/item?id=20712040 Pokemonsay: Pokemon Version of Cowsay <https://github.com/dfrankland/pokemonsay> (47 comments)
+   2021-11-25T04:57:06 https://news.ycombinator.com/item?id=29338339 Show HN: Cowsay Command for 2021 <https://github.com/Code-Hex/Neo-cowsay> (1 comment)
+   2022-05-07T09:21:25 https://news.ycombinator.com/item?id=31293171 Cowsay should not be enabled by default (2015) <https://github.com/ansible/ansible/issues/10530> (7 comments)
+   ⋮
+
+.. vim:ft=rst ts=3 sts=3 sw=3 et
