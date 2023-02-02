@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+# Copyright © 2023 Jakub Wilk <jwilk@jwilk.net>
+# SPDX-License-Identifier: MIT
+
+set -e -u
+
+prog="${0##*/}"
+
+usage()
+{
+    printf 'Usage: %s QUERY\n' "$prog"
+}
+
+if [ $# -eq 0 ]
+then
+    usage >&2
+    exit 1
+fi
+query="$*"
+user_agent='zhn (https://github.com/jwilk/zhn)'
+url='https://hn.algolia.com/api/v1/search'
+json=$(curl --silent --fail --show-error --user-agent "$user_agent" -G --data-urlencode tags=story --data-urlencode query="$query" "$url")
+data=$(jq -r '.hits[] | [.created_at, .objectID, .title, .url, .num_comments] | @tsv' <<< "$json")
+while IFS=$'\t' read -r date id title url num_comments
+do
+    date=${date%.000Z}
+    s='s'
+    [[ $num_comments -eq 1 ]] && s=''
+    printf '%s\n' "$date https://news.ycombinator.com/item?id=$id $title <$url> ($num_comments comment$s)"
+done <<< "$data"
+
+# vim:ts=4 sts=4 sw=4 et
