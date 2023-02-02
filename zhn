@@ -22,7 +22,8 @@ user_agent='zhn (https://github.com/jwilk/zhn)'
 url='https://hn.algolia.com/api/v1/search'
 json=$(curl --silent --fail --show-error --user-agent "$user_agent" -G --data-urlencode tags=story --data-urlencode query="$query" "$url")
 data=$(jq -r '.hits[] | [.created_at, .objectID, .title, .url, .num_comments] | @tsv' <<< "$json")
-while IFS=$'\t' read -r date id title url num_comments
+data=${data//$'\t'/$'\36'}  # use RS instead of tab to handle empty fields correctly
+while IFS=$'\36' read -r date id title url num_comments
 do
     date=${date%.000Z}
     s='s'
