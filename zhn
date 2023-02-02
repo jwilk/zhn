@@ -17,6 +17,11 @@ then
     usage >&2
     exit 1
 fi
+if [[ "$1" = '-h' ]] || [[ "$1" = '--help' ]]
+then
+    usage
+    exit
+fi
 query="$*"
 user_agent='zhn (https://github.com/jwilk/zhn)'
 url='https://hn.algolia.com/api/v1/search'
